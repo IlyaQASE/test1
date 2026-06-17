@@ -1,0 +1,30 @@
+    1. Задача: Вторая зарплата.
+Дана таблица Employee (id int PK, salary int).
+Напиши SQL-запрос, который находит вторую по величине уникальную зарплату.
+Если её нет, запрос должен вернуть null.
+
+SELECT MAX(salary) AS SecondHighestSalary
+FROM Employee
+WHERE salary < (
+    SELECT MAX(salary)
+    FROM Employee)
+
+    2. Задача: Поиск дубликатов email.
+Дана таблица Person (id int PK, email varchar).
+Напиши SQL-запрос, который находит все дублирующиеся email-адреса.
+
+SELECT email
+FROM Person
+GROUP BY email
+HAVING COUNT(*) > 1
+
+
+   3. Задача: Клиенты без заказов.
+Дана таблица Customers (id int PK, name varchar) и Orders (id int PK, customerId int
+FK). Напиши SQL-запрос, который возвращает всех клиентов, которые ни разу не
+делали заказов.
+
+SELECT Customers.name AS Customers
+FROM Customers
+LEFT JOIN Orders ON Customers.id = Orders.customerId
+WHERE Orders.id IS NULL
